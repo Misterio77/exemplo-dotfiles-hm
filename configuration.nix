@@ -8,6 +8,7 @@
   users.users.bob = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
+    password = "1234";
   };
 
   # Sua configuração do home-manager vai aqui dentro
