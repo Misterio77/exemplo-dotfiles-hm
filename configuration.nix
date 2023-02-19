@@ -12,16 +12,18 @@
   };
 
   # Sua configuração do home-manager vai aqui dentro
-  home-manager.users.bob = {
+  home-manager.users.bob = { config, ... }:
+  let inherit (config.lib.file) mkOutOfStoreSymlink;
+  in
+  {
     # Instalar pacotes
-    home.packages = with pkgs; [ neovim kitty ];
+    home.packages = with pkgs; [ neovim kitty git ];
 
     # Declarar arquivos que vão no ~/.config
     xdg.configFile = {
-      # Colocar configurações do nvim em ~/.config/nvim
-      "nvim".source = ./dots/.config/nvim;
-      # Colocar configurações do kitty em ~/.config/kitty
-      "kitty".source = ./dots/.config/kitty;
+      # Fazer links simbólicos pra caminhos hardcodados
+      "nvim".source = mkOutOfStoreSymlink "/home/bob/dots/.config/nvim";
+      "kitty".source = mkOutOfStoreSymlink "/home/bob/dots/.config/kitty";
     };
 
     home.stateVersion = "22.11";
